@@ -1,0 +1,81 @@
+
+button {
+/*  font-family:"Times New Roman", Times, serif;*/
+  border: 0px solid black;
+  font-size: 16px;
+  /*line-height: 24px;*/  
+  padding: 3px 10px 0px 10px;
+  margin: 3px 3px 3px 3px;
+  /*border radius*/
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;  
+  /*shadow*/
+  -moz-box-shadow: 1px 1px 1px black;
+  -webkit-box-shadow: 1px 1px 1px black;
+  box-shadow: 1px 1px 1px black;
+  
+  /*text-shadow: 1px 1px 1px gray;*/
+  color: rgba(260,260,260,1);
+  
+  text-align:center;
+  /*remove text selection*/
+/*  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;*/
+} 
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+button:active, button:disabled  {
+  text-shadow: 0px 0px 0px gray;
+  color: rgba(150,100,100,1);
+  /*shadow*/
+  -moz-box-shadow: 1px 1px 1px gray;
+  -webkit-box-shadow: 1px 1px 1px gray;
+  box-shadow: 1px 1px 1px gray;
+  
+  /*margin: 3px 1px 3px 5px;*/
+  
+/*  margin-left: 2px;
+  margin-top: 2px;*/ 
+}
+
+button:hover{
+/*  -moz-box-shadow: 0px 0px 10px black;
+  -webkit-box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 0px 10px black;  */
+}
+
+/*background gradients*/
+
+button {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(200,100,100,0.7)), to(rgba(200,100,100,0.7))); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  rgba(200,100,100,0.7),  rgba(200,100,100,0.7)); /* for firefox 3.6+ */   
+}
+
+button:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(256,170,170,1)), to(rgba(230,130,130,1))); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  rgba(256,170,170,1),  rgba(230,130,130,1)); /* for firefox 3.6+ */
+}
+
+button:active, button:disabled {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(230,130,130,1)), to(rgba(256,170,170,1))); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  rgba(230,130,130,1), rgba(256,170,170,1)); /* for firefox 3.6+ */
+}
+
+input {
+  border: 0px solid black;
+  /*line-height: 22px;*/
+  width: 110px;
+  height: 15px;
+  -moz-line-height: 18px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  padding: 2px 5px 2px 5px;
+}

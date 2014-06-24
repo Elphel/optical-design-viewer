@@ -1,0 +1,96 @@
+#cnv1{
+  position: absolute;
+  left:5px;
+  top:5px;
+  width: 1000px;
+  height: 500px;
+  box-shadow: 0px 0px 5px rgba(100,100,100,0.7);
+  border-radius:3px;
+}
+
+#elements_table_header{
+  position: absolute;
+  left:5px;
+  top:510px;  
+}
+
+#elements_table{
+  position: absolute;
+  left:5px;
+  top:544px;  
+}
+
+#controls_div{
+  position: absolute;
+  left: 1010px;
+  top:5px;
+}
+
+table {
+  border: 1px solid rgba(200,200,200,1);
+  border-collapse:collapse;
+}
+
+#elements_table_header, #controls_table, #ray_draw_table{
+  background: rgba(200,200,200,0.6);
+}
+
+td{
+    padding: 2px 5px 2px 5px;
+    text-align: center;
+    border: 0px solid red;
+}
+
+#controls_table tr td input{
+  padding: 10px;
+}
+
+input{
+  width: 100px;
+  text-align:right;
+}
+
+#file_to_save{
+  width: 200px;
+}
+
+#load_designs_list{
+  position:absolute;
+  left:1010px;
+  top:44px;
+}
+
+#number{
+  margin: 0px;
+  padding:2px 3px 2px 3px;
+  font-size:0.7em
+}
+
+#ray_draw_div{
+  position: absolute;
+  left:1010px;
+  top:74px;  
+}
+
+.remove_button{
+  font-size: 16px;
+  margin: 0px;
+  padding: 1px 6px 1px 6px;
+  border-radius: 10px;
+}
+
+.plus_button{
+  font-size: 16px;
+  padding: 2px 6px 0px 6px;
+  border-radius: 10px;
+}
+
+.elements{
+  margin: 0px;
+}
+
+#elements_table{
+  padding: 0px 0px 0px 0px;
+  background: rgba(200,200,200,0.6);
+}
+

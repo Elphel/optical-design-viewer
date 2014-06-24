@@ -1,0 +1,67 @@
+.list
+{
+  background:red;
+}
+
+.list_view ul{
+	 position: relative;
+	 top: -12px;
+	 left: -40px;
+	 width:280px;
+}
+
+.list_view li 
+{
+         list-style-type: none;  
+         display: block;
+         border: 1px dotted rgba(220,220,220,1);  
+	 background: rgba(250,250,250,1);
+	 z-index: 100;
+         padding-left: 5px; 
+	 color: black;
+}
+
+.list_view li:hover 
+{
+         background: rgba(200,128,128,1);  
+}
+
+.list_head
+{
+      /*  font-family:"Times New Roman", Times, serif;*/
+	font-family:Arial;
+	position:absolute;
+	width: 285px;
+	height: 25px;
+	z-index: 50;
+	line-height: 25px; /*should be the same as height*/
+	font-size: 1em;
+	text-align:center;
+	color: rgba(256,256,256,1);
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(200,100,100,0.7)), to(rgba(200,100,100,0.7))); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  rgba(200,100,100,0.7),  rgba(200,100,100,0.7)); /* for firefox 3.6+ */  
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+}
+
+.list_head:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(256,170,170,1)), to(rgba(230,130,130,1))); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  rgba(256,170,170,1),  rgba(230,130,130,1)); /* for firefox 3.6+ */
+	cursor: default;
+}
+
+.list_view{
+  position: absolute;
+  top: 25px;
+  left: 3px;
+  /*background:black;*/
+  padding:0px;
+  line-height: 25px; /*should be the same as height*/
+  font-size: 14px;
+  width: 285px;
+  height: 200px;
+  overflow:hidden;
+  z-index:100;
+}

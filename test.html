@@ -1,0 +1,40 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="all" href="css/reset.css" /> <!-- reset css -->
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+<style>
+    body{ background-color: ivory; }
+    #canvas{border:1px solid red;}
+</style>
+
+<script>
+$(function(){
+
+    var canvas=document.getElementById("canvas");
+    var ctx=canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.moveTo(66,21);
+    ctx.lineTo(79,35);
+    ctx.lineTo(79,53);
+    ctx.quadraticCurveTo(79-55,53+(185-53)/2,79,167);
+    ctx.lineTo(79,185);
+    ctx.lineTo(66,199);
+    ctx.quadraticCurveTo(66-60,21+(199-21)/2,66,21);
+    ctx.closePath();
+    ctx.fillStyle="skyblue";
+    ctx.fill();
+    ctx.lineWidth=2;
+    ctx.strokeStyle="black";
+    ctx.stroke();
+
+}); // end $(function(){});
+</script>
+
+</head>
+
+<body>
+    <canvas id="canvas" width=300 height=300></canvas>
+</body>
+</html> 

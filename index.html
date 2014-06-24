@@ -1,0 +1,83 @@
+<html>
+<!--
+FILE NAME  : index.html
+DESCRIPTION: optical design
+REVISION: 1.00
+AUTHOR: Oleg Dzhimiev <oleg@elphel.com>
+LICENSE: AGPL, see http://www.gnu.org/licenses/agpl.txt
+Copyright (C) 2014 Elphel, Inc.
+-->
+  <head>
+    <title>Lens Design Tool</title>
+    <script src="jquery-2.1.0.min.js" type="text/javascript"></script>
+    <script src="jcanvas.min.js" type="text/javascript"></script>
+    <script src="lens_design.js" type="text/javascript"></script>
+    <script src="axii_and_scales.js" type="text/javascript"></script>
+    
+    <script src="list.js" type="text/javascript"></script>
+    <script src="jquery_list.js" type="text/javascript"></script>
+    
+    <script src="files.js" type="text/javascript"></script>
+    
+    <link rel="stylesheet" type="text/css" href="button.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="list.css" />
+  </head>
+  <body>
+    <div id=load_designs_list class=list></div>
+    <div id="cnv1_div">
+      <canvas id="cnv1" width="1000" height="500"></canvas>
+    </div>
+    <div id="controls_div">
+      <table id="controls_table">
+	<tr>
+	  <td><button onclick="save_design()">Save</button></td>
+	  <td><input type="text" id="file_to_save" value="tmp_design.xml" /></td>
+	</tr>
+	  <td></td>
+	  <td></td>
+      </table>
+    </div>
+    <div id="elements_table_header_div">
+      <table id="elements_table_header">
+      <tr id="header">
+	<td><div style="width:16px;">#</div></td>
+	<td width=100 >Distance, <span style="font-size:0.8em">mm</span></td>
+	<td width=100 >Thickness, <span style="font-size:0.8em">mm</span></td>
+	<td width=100 >Material</td>
+	<td width=100 >Comment</td>
+	<td width=24></td>
+	<td>Aperture<span style="font-size:0.8em"> (Dia)</span>, <span style="font-size:0.8em">mm</span></td>
+	<td width=100 >R<span style="font-size:0.8em">(curve)</span>, <span style="font-size:0.8em">mm</span></td>
+	<td width=100 >&kappa;</td>
+	<td width=100 >&alpha;<span style="font-size:0.6em">1</span></td>
+	<td width=100 >&alpha;<span style="font-size:0.6em">2</span></td>
+	<td width=100 >&alpha;<span style="font-size:0.6em">3</span></td>
+	<td width=95 >&alpha;<span style="font-size:0.6em">4</span></td>
+	<td><button class='plus_button' onclick="element_add_button()"><b>+</b></button></td>
+      </tr>
+      </table>
+    </div>
+    <div id="elements_table">
+    </div>
+    <div id="ray_draw_div">
+      <table id="ray_draw_table">
+      <tr>
+	<td>Image height/2, <span style="font-size:0.6em">mm</span></td>
+	<td><input type="text" id="rays_imhh" value="3" /></td>
+      </tr>
+      <tr>
+	<td>N</td>
+	<td><input type="text" id="rays_n" value="3" /></td>
+      </tr>
+      <tr>
+	<td>color</td>
+	<td><input type="text" id="rays_color" value="rgb(20,150,20)" /></td>
+      </tr>      
+      <tr>
+	<td><button onclick="rays_draw()">Draw rays</button></td>
+      </tr>
+      </table>
+    </div>
+  </body>
+</html>
