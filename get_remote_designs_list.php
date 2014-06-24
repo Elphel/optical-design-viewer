@@ -1,6 +1,6 @@
 <?php
 /*
-FILE NAME  : get_designs_list.php
+FILE NAME  : get_remote_designs_list.php
 DESCRIPTION: optical design
 REVISION: 1.00
 AUTHOR: Oleg Dzhimiev <oleg@elphel.com>
@@ -10,17 +10,21 @@ Copyright (C) 2014 Elphel, Inc.
 
 //$res_xml = file_get_contents("sensors/sensors.xml");
 
-$path = "local";
+$path = "https://github.com/Elphel/elens";
+$contents = file_get_contents($path);
+$regexp = '#<a[^>]*href="([^"]*)"[^>]*title=".*.xml"#';
+$files = Array();
+if(preg_match_all($regexp, $contents, $matches, PREG_SET_ORDER)) { 
+  foreach ($matches as $match) {
+    $files[] = basename($match[1]);
+  }
+}
 
 $res_xml  = "<?xml version='1.0'?>\n";
 $res_xml .= "<Document>\n";
 
-$files = scandir($path);
-
 foreach($files as $file){
-  if (is_file("$path/$file")) {
     $res_xml .= "\t<file>$file</file>\n";
-  }
 }
 
 $res_xml .= "</Document>";

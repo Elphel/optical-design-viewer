@@ -14,7 +14,8 @@ else die("-1");
 if (isset($_GET['cmd'])) $cmd = $_GET['cmd'];
 else die("-2");
 
-$default_path = "local";
+if (isset($_GET['path'])) $default_path = $_GET['path'];
+else die("-3");
 
 if      ($cmd=="save") {
     file_put_contents("$default_path/$file",file_get_contents("php://input"));

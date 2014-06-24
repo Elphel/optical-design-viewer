@@ -7,6 +7,11 @@ LICENSE: AGPL, see http://www.gnu.org/licenses/agpl.txt
 Copyright (C) 2014 Elphel, Inc.
 */
 
+var path_local = "local";
+var path_remote = "https://raw.githubusercontent.com/Elphel/elens/master";
+var pattern_local = "local: ";
+var pattern_remote = "github: ";
+
 function save_design(){
   console.log("save_design(): "+$("#file_to_save").val());
   var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Document>\n"; 
@@ -43,7 +48,7 @@ function save_design(){
 
 function postSettings(file, cmd, xml) { 
     $.ajax({
-	url: "files.php?file="+file+"&cmd="+cmd,
+	url: "files.php?file="+file+"&cmd="+cmd+"&path="+path_local,
 	type: "POST",
 	dataType: "xml",
 	data: xml,
@@ -56,13 +61,14 @@ function postSettings(file, cmd, xml) {
 function parse_save_response(text) {
     //$("#test").html(text);
     //reload list
+    designs = Array();
     get_designs_list("load_designs_list");
     jquery_list("load_designs_list","Load",load_design);
 }
 
-function getDesign(file) {
+function getDesign(file,path) {
     $.ajax({
-	url: "files.php?file="+file+"&cmd=read",
+	url: "files.php?file="+file+"&cmd=read&path="+path,
 	type: "GET",
 	async: false,
 	complete: function(response){
