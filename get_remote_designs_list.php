@@ -12,13 +12,21 @@ Copyright (C) 2014 Elphel, Inc.
 
 $path = "https://github.com/Elphel/elens";
 $contents = file_get_contents($path);
-$regexp = '#<a[^>]*href="([^"]*)"[^>]*title=".*.xml"#';
+$regexp_xml = '#<a[^>]*href="([^"]*)"[^>]*title=".*.xml"#';
+$regexp_zmx = '#<a[^>]*href="([^"]*)"[^>]*title=".*.zmx"#';
+
 $files = Array();
-if(preg_match_all($regexp, $contents, $matches, PREG_SET_ORDER)) { 
+if(preg_match_all($regexp_xml, $contents, $matches, PREG_SET_ORDER)) { 
   foreach ($matches as $match) {
     $files[] = basename($match[1]);
   }
 }
+if(preg_match_all($regexp_zmx, $contents, $matches, PREG_SET_ORDER)) { 
+  foreach ($matches as $match) {
+    $files[] = basename($match[1]);
+  }
+}
+
 
 $res_xml  = "<?xml version='1.0'?>\n";
 $res_xml .= "<Document>\n";
