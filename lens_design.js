@@ -93,7 +93,7 @@ function array_add_element(d,t,m,name,fh,fc,fk,fa1,fa2,fa3,fa4,bh,bc,bk,ba1,ba2,
     k: +bk,
     a: [+ba1,+ba2,+ba3,+ba4]
   };
-    
+  
   canvas_draw_element(ind);
   array_update_entries();
 } 
@@ -112,6 +112,16 @@ function array_update_entries(){
 	  }
 	}
       }
+      var total_power = 0;
+      for(i=0;i<e.length;i++){
+	  if (e[i].front.h>0) {
+	    tmp = find_optical_power(e[i])
+	    total_power+= tmp;
+	    console.log("Optical power of element #"+i+" is "+tmp+" diopters");
+	  }
+      }
+      console.log("Total optical power is "+total_power);
+      
       table_update_all();
 }
 
@@ -928,7 +938,16 @@ function find_aperture_stop_ray(x,y,alpha,height,dalpha,old_cv,limit){
   }
 }
 
-
+function find_optical_power(element){
+  var n = +Glass[element.m.toUpperCase()].n;
+  var r1 = +element.front.c;
+  var r2 = +element.back.c;
+  var d = +element.t;
+  var inv_f = (n-1)*(1/r1-1/r2+(n-1)*d/n/(r1*r2));
+  var f = 1/inv_f;
+  console.log("f = "+f+" mm");
+  return inv_f*1000;
+}
 
 
 var Glass = {
