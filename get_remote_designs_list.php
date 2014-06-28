@@ -14,7 +14,7 @@ $path = "https://github.com/Elphel/elens";
 $contents = file_get_contents($path);
 $regexp_xml = '#<a[^>]*href="([^"]*)"[^>]*title=".*.xml"#';
 $regexp_zmx = '#<a[^>]*href="([^"]*)"[^>]*title=".*.zmx"#';
-$regexp_zmx = '#<a[^>]*href="([^"]*)"[^>]*title=".*.len"#';
+$regexp_len = '#<a[^>]*href="([^"]*)"[^>]*title=".*.len"#';
 
 $files = Array();
 if(preg_match_all($regexp_xml, $contents, $matches, PREG_SET_ORDER)) { 
