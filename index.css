@@ -1,3 +1,7 @@
+body, input, canvas{
+  font-family:"Times New Roman", Times, serif;
+}
+
 #cnv1{
   position: absolute;
   left:5px;
