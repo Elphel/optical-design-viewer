@@ -23,6 +23,9 @@ var selected_elements = Array();
 var epsilon = 0.0001;
 var epsilon2 = 0.0001;
 
+var file = "";
+var path = "";
+
 $(function(){
   yO = $("#cnv1").height()/2;
   console.log("Drawing axii");
@@ -36,6 +39,11 @@ $(function(){
   cnv_div = document.getElementById('cnv1_div');
   if (cnv_div.addEventListener) cnv_div.addEventListener('DOMMouseScroll', wheelEvent, false);
   cnv_div.onmousewheel = wheelEvent;
+  
+  parseURL();
+  if (file!=""&&path!="") {
+    getDesign(file,path);
+  }
   
   //ray_draw(0,0,0);
   
@@ -117,10 +125,10 @@ function array_update_entries(){
 	  if (e[i].front.h>0) {
 	    tmp = find_optical_power(e[i])
 	    total_power+= tmp;
-	    console.log("Optical power of element #"+i+" is "+tmp+" diopters");
+	    //console.log("Optical power of element #"+i+" is "+tmp+" diopters");
 	  }
       }
-      console.log("Total optical power is "+total_power);
+      //console.log("Total optical power is "+total_power);
       
       table_update_all();
 }
@@ -945,10 +953,20 @@ function find_optical_power(element){
   var d = +element.t;
   var inv_f = (n-1)*(1/r1-1/r2+(n-1)*d/n/(r1*r2));
   var f = 1/inv_f;
-  console.log("f = "+f+" mm");
+  //console.log("f = "+f+" mm");
   return inv_f*1000;
 }
 
+function parseURL() {
+  var parameters=location.href.replace(/\?/ig,"&").split("&");
+  for (var i=0;i<parameters.length;i++) parameters[i]=parameters[i].split("=");
+  for (var i=1;i<parameters.length;i++) {
+    switch (parameters[i][0]) {
+      case "file": file = parameters[i][1];break;
+      case "path": path = parameters[i][1];break;
+    }
+  }
+}
 
 var Glass = {
   "BAF51"    : {n:1.652242,B1:1.51503623,B2:0.153621958,B3:1.15427909,C1:0.00942734715,C2:0.04308265,C3:124.889868},//barium flint

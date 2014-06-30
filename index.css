@@ -69,7 +69,13 @@ input{
 #ray_draw_div{
   position: absolute;
   left:1010px;
-  top:74px;  
+  top:122px;  
+}
+
+#links{
+  position: absolute;
+  left:1014;
+  top:74px;
 }
 
 .remove_button{

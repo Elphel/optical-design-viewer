@@ -12,7 +12,7 @@ if (isset($_GET['file'])) $file = $_GET['file'];
 else die("-1");
                      
 if (isset($_GET['cmd'])) $cmd = $_GET['cmd'];
-else die("-2");
+else                     $cmd = "read";
 
 if (isset($_GET['path'])) $default_path = $_GET['path'];
 else die("-3");

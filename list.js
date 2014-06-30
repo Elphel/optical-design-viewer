@@ -71,6 +71,9 @@ function get_designs_list(element_id) {
 	list = "<div class='list_view'><ul></ul></div>";
     }
     $("#"+element_id).html(list);
+    //create links
+    $("#link_local").html("<a href='"+path_local+"'>Local files</a>");
+    $("#link_remote").html("<a href='"+path_remote_browse+"'>Remote files</a>");
 }
 
 function wheelEvent_list(event){

@@ -9,6 +9,7 @@ Copyright (C) 2014 Elphel, Inc.
 
 var path_local = "local";
 var path_remote = "https://raw.githubusercontent.com/Elphel/elens/master";
+var path_remote_browse = "https://github.com/Elphel/elens";
 var pattern_local = "local: ";
 var pattern_remote = "github: ";
 
@@ -42,7 +43,7 @@ function save_design(){
     xml += "\t\t</back>\n";
     xml += "\t</element>\n";
   });
-  xml += "</Document>"
+  xml += "</Document>";
   postSettings($("#file_to_save").val(), "save", xml);
 }
 
@@ -66,9 +67,11 @@ function parse_save_response(text) {
     jquery_list("load_designs_list","Load",load_design);
 }
 
-function getDesign(file,path) {
+function getDesign(f,p) {
+    //set globals
+    createLink(f,p);
     $.ajax({
-	url: "files.php?file="+file+"&cmd=read&path="+path,
+	url: "files.php?file="+f+"&cmd=read&path="+p,
 	type: "GET",
 	async: false,
 	complete: function(response){
@@ -113,8 +116,17 @@ function restore_design(text){
 	  $(this).find("back").find("a3").text(),
 	  $(this).find("back").find("a4").text()
 	);
-      });
-      
-      
-      
+      });     
+}
+
+function createLink(f,p){
+	var string = "<a href='";
+	string+= window.location.href.substr(0,window.location.href.lastIndexOf('?'));
+	string+="?file="+f;
+	string+="&path="+p;
+	string+="'>Permanent Link</a>";
+	$("#link").html(string);
+	
+	string = "<a href='files.php?file="+f+"&path="+p+"'>Download XML</a>";
+	$("#link_dl").html(string);
 }
