@@ -78,6 +78,19 @@ input{
   top:74px;
 }
 
+#info{
+  position: absolute;
+  left:1014;
+  top:225px;  
+}
+
+#srccode{
+  position: absolute;
+  left:925px;
+  top:5px;
+  z-index:3;
+}
+
 .remove_button{
   font-size: 16px;
   margin: 0px;

@@ -636,7 +636,11 @@ function rays_draw(){
   
   //step1!
   var hh1 = find_marginal_ray_half_height(0,0,0,0.1,old_cv,100);
+  $("#crw").html(Math.round(2*hh1*1000)/1000);
   var c1  = find_aperture_stop_ray(x,y,alpha,0,dalpha,old_cv,100);
+  var tmp = (c1[2]>90)?(c1[2]-180):(c1[2]);
+  tmp=Math.round(tmp*1000)/1000;
+  $("#mra").html(tmp);
   
   var step = +2*hh1/(n-1);
   
