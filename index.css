@@ -1,5 +1,9 @@
-body, canvas{
-  font-family:"Times New Roman", Times, serif;
+body,canvas{
+  font-family: "Times New Roman", Times, serif;
+}
+
+button {
+  font-family: "Times New Roman", Times, serif;
 }
 
 #cnv1{
