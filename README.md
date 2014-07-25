@@ -3,6 +3,9 @@ optical-design-viewer
 
 Show, view and edit prescriptions in a web browser (preferably chromium)
 
+#DEMO
+[Online Demo](http://community.elphel.com/files/optical-design-viewer/?file=test.len&path=local)
+
 #TODO
 * Fix some bugs
 * Add drawing for variable wavelengths (need Sellmeier's coefficients)
@@ -15,4 +18,4 @@ Show, view and edit prescriptions in a web browser (preferably chromium)
 * Add graphs for aberrations
 
 #LICENSE
-AGPL, see http://www.gnu.org/licenses/agpl.txt
+[AGPL](http://www.gnu.org/licenses/agpl.txt)
