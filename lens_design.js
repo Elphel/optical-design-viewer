@@ -29,6 +29,9 @@ var path = "";
 $(function(){
   yO = $("#cnv1").height()/2;
   console.log("Drawing axii");
+  
+  $("#file_to_save").val("tmp_design.xml");
+  
   draw_axii();
   draw_reference_scale();
   draw_scale();
@@ -64,7 +67,7 @@ function element_add_button(){
     0,//front a3
     0,//front a4
     8,//back height
-    -1000,//back curve radius
+    1000000,//back curve radius
     0,//back k
     0,//back a1
     0,//back a2
@@ -185,7 +188,7 @@ function table_update_all(){
 	  html += "\t\t<td width=100 ></td>\n";
 	}
     }else{//aperture case
- 	html += "\t<td width=24 ></td>\n";
+ 	html += "\t\t<td width=24 ></td>\n";
 	html += "\t\t<td><input type='text' id='front_height' value='"+e[i].front.h+"'\></td>\n";
 	html += "\t\t<td width=100 ></td>\n";
 	html += "\t\t<td width=100 ></td>\n";
