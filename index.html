@@ -40,19 +40,18 @@ Copyright (C) 2014 Elphel, Inc.
     <div id="elements_table_header_div">
       <table id="elements_table_header">
       <tr id="header">
-	<td><div style="width:16px;">#</div></td>
+	<td width=16><div style="width:16px;">#</div></td>
 	<td width=100 >Distance, <span style="font-size:0.8em">mm</span></td>
 	<td width=100 >Thickness, <span style="font-size:0.8em">mm</span></td>
 	<td width=100 >Material</td>
 	<td width=100 >Comment</td>
-	<td width=24></td>
-	<td>Aperture<span style="font-size:0.8em"> (Dia)</span>, <span style="font-size:0.8em">mm</span></td>
+	<td colspan=2 width=137>Aperture<span style="font-size:0.8em"> (Dia)</span>, <span style="font-size:0.8em">mm</span></td>
 	<td width=100 >R<span style="font-size:0.8em">(curve)</span>, <span style="font-size:0.8em">mm</span></td>
 	<td width=100 >&kappa;</td>
 	<td width=100 >&alpha;<span style="font-size:0.8em"><sub>1</sub>&nbsp;(r<sup>2</sup>)</span></td>
 	<td width=100 >&alpha;<span style="font-size:0.8em"><sub>2</sub>&nbsp;(r<sup>4</sup>)</span></td>
 	<td width=100 >&alpha;<span style="font-size:0.8em"><sub>3</sub>&nbsp;(r<sup>6</sup>)</span></td>
-	<td width=95 >&alpha; <span style="font-size:0.8em"><sub>4</sub>&nbsp;(r<sup>8</sup>)</span></td>
+	<td width=100 >&alpha; <span style="font-size:0.8em"><sub>4</sub>&nbsp;(r<sup>8</sup>)</span></td>
 	<td><button class='plus_button' onclick="element_add_button()"><b>+</b></button></td>
       </tr>
       </table>
@@ -75,30 +74,31 @@ Copyright (C) 2014 Elphel, Inc.
       </tr>      
       <tr>
 	<td><button onclick="rays_draw()">Draw rays</button></td>
+	<td></td>
       </tr>
       </table>
     </div>
     <div id="links">
-      <table style="border:0px">
+      <table>
       <tr>
-	<td width=120 style="text-align:left"><div id="link_local"></div></td>
-	<td width=120 style="text-align:left"><div id="link_remote"></div></td>
+	<td><div id="link_local"></div></td>
+	<td><div id="link_remote"></div></td>
       </tr>
       <tr>
-	<td width=120 style="text-align:left"><div id="link"></div></td>
-	<td width=120 style="text-align:left"><div id="link_dl"></div></td>
+	<td><div id="link"></div></td>
+	<td><div id="link_dl"></div></td>
       </tr>
       </table>
     </div>
     <div id="info">
-      <table style="border:0px">
+      <table>
 	<tr>
-	  <td style="text-align:left">Rays width, <span style="font-size:0.8em">mm</span></td>
-	  <td style="text-align:left"><div id="crw"></div></td>
+	  <td>Rays width, <span style="font-size:0.8em">mm</span></td>
+	  <td><div id="crw"></div></td>
 	</tr>
 	<tr>
-	  <td style="text-align:left">Field ray angle, <span style="font-size:0.8em">&deg;</span></td>
-	  <td style="text-align:left"><div id="mra"></div></td>
+	  <td>Field ray angle, <span style="font-size:0.8em">&deg;</span></td>
+	  <td><div id="mra"></div></td>
 	</tr>
       </table>
     </div>

@@ -37,6 +37,7 @@ button {
 table {
   border: 1px solid rgba(200,200,200,1);
   border-collapse:collapse;
+  /*background: rgba(200,200,200,0.6);*/
 }
 
 #elements_table_header, #controls_table, #ray_draw_table{
@@ -82,14 +83,14 @@ input{
 
 #links{
   position: absolute;
-  left:1014;
+  left:1010;
   top:74px;
 }
 
 #info{
   position: absolute;
-  left:1014;
-  top:225px;  
+  left:1010;
+  top:225px;
 }
 
 #srccode{
@@ -122,7 +123,16 @@ input{
 }
 
 #elements_table{
-  padding: 0px 0px 0px 0px;
+  /*padding: 5px 5px 5px 5px;*/
   background: rgba(200,200,200,0.6);
 }
 
+#links table, #info table{
+  border:0px;
+  background: white;
+}
+
+#info td, #links td{
+  width: 120px;
+  text-align:left;
+}

@@ -149,7 +149,7 @@ function table_update_all(){
     html += "\t\t<td><input type='text' id='name' value='"+e[i].name+"'\></td>\n";
     //aperture stop if <0
     if (e[i].front.h>=0) {
-	html += "\t<td><span style='font-size:0.8em;'>front</span></td>\n";
+	html += "\t<td width=26><span style='font-size:0.8em;'>front</span></td>\n";
 	html += "\t\t<td><input type='text' id='front_height' value='"+e[i].front.h+"'\></td>\n";
 	html += "\t\t<td><input type='text' id='front_curve' value='"+e[i].front.c+"'\></td>\n";
 	html += "\t\t<td><input type='text' id='front_k' value='"+e[i].front.k+"'\></td>\n";
@@ -166,13 +166,14 @@ function table_update_all(){
 	}
 	html += "\t\t<td><button class='remove_button'><b>&ndash;</b></button></td>\n";
 	html += "\t</tr>\n";
+	
 	html += "\t<tr>\n";
 	html += "\t<td></td>\n";
 	html += "\t<td></td>\n";
 	html += "\t<td></td>\n";
 	html += "\t<td></td>\n";
 	html += "\t<td></td>\n";
-	html += "\t<td><span style='font-size:0.8em;'>back</span></td>\n";
+	html += "\t<td width=26><span style='font-size:0.8em;'>back</span></td>\n";
 	html += "\t<td><input type='text' id='back_height' value='"+e[i].back.h+"'\></td>\n";
 	html += "\t<td><input type='text' id='back_curve' value='"+e[i].back.c+"'\></td>\n";
 	html += "\t<td><input type='text' id='back_k' value='"+e[i].back.k+"'\></td>\n";
@@ -187,15 +188,16 @@ function table_update_all(){
 	  html += "\t\t<td width=100 ></td>\n";
 	  html += "\t\t<td width=100 ></td>\n";
 	}
+	html += "\t<td></td>\n";
     }else{//aperture case
- 	html += "\t\t<td width=24 ></td>\n";
+ 	html += "\t\t<td width=26></td>\n";
 	html += "\t\t<td><input type='text' id='front_height' value='"+e[i].front.h+"'\></td>\n";
 	html += "\t\t<td width=100 ></td>\n";
 	html += "\t\t<td width=100 ></td>\n";
 	html += "\t\t<td width=100 ></td>\n";
 	html += "\t\t<td width=100 ></td>\n";
 	html += "\t\t<td width=100 ></td>\n";
-	html += "\t\t<td width=102 ></td>\n";
+	html += "\t\t<td width=100 ></td>\n";
 	html += "\t\t<td><button class='remove_button'><b>&ndash;</b></button></td>\n";       
     }
     html += "\t</tr>\n";
@@ -210,24 +212,10 @@ function table_update_all(){
   });
   //bind onchange
   for(var i=0;i<e.length;i++){  
-    $("#element_"+e[i].id).find("#distance").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#thickness").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#material").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#name").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#front_height").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#front_curve").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#front_k").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#front_a1").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#front_a2").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#front_a3").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#front_a4").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#back_height").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#back_curve").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#back_k").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#back_a1").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#back_a2").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#back_a3").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
-    $("#element_"+e[i].id).find("#back_a4").change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"));});
+    
+    $("#element_"+e[i].id).find("input").each(function(){
+      $(this).change(function(){element_onchange_redraw($(this).parent().parent().parent().parent().attr("value"))});
+    });
     
     $("#element_"+e[i].id).find("#number").click(function(event){
 	//enable_deselect=false;
