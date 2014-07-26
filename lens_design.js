@@ -23,6 +23,8 @@ var selected_elements = Array();
 var epsilon = 0.0001;
 var epsilon2 = 0.0001;
 
+var small_step_if_sqrt_from_negative = 0.1;//in mm
+
 var file = "";
 var path = "";
 
@@ -639,9 +641,14 @@ function rays_draw(){
       ray_draw("center_"+0,0,0,0,$("#rays_color").val());
       ray_draw("slant_"+0,c1[0],c1[1],c1[2],$("#rays_color").val());    
   }else{
+    console.log("Important step");
     for(var i=0;i<n;i++){
-      ray_draw("center_"+i,0,(-hh1+step*i),0,$("#rays_color").val());
-      ray_draw("slant_"+i,c1[0],c1[1]-hh1+step*i,c1[2],$("#rays_color").val());
+      //need to step away by ~100px?
+      //ray_draw("center_"+i,0,(-hh1+step*i),0,$("#rays_color").val());
+      ray_draw("center_"+i,-150,(-hh1+step*i),0,$("#rays_color").val());
+      tmp_x = c1[0]-150;
+      tmp_y = Math.tan(c1[2]*Math.PI/180)*tmp_x+c1[1]-Math.tan(c1[2]*Math.PI/180)*c1[0];
+      ray_draw("slant_"+i,tmp_x,tmp_y-hh1+step*i,c1[2],$("#rays_color").val());
     }
   }
   
@@ -690,7 +697,7 @@ function ray_draw(name,x,y,angle,color){
     //console.log("Locating!");
     if (ray_x<=+e[i].d||ray_x<(+e[i].d+e[i].t)) {
       if (ray_x<=+e[i].d) console.log("The ray is to the left of "+i+" lens");
-      else                            console.log("The ray is 'inside' of "+i+" lens");
+      else                console.log("The ray is 'inside' of "+i+" lens");
       break;
     }
   }
@@ -708,6 +715,7 @@ function ray_draw(name,x,y,angle,color){
   obj[path]["y1"]= cy(tmp_point[1]);
   npi = 2;//Next Point Index
   
+  console.log("tracing forward");
   for(var j=0;j<(e.length-i);j++){
       //console.log(j);
       if (e[i+j].front.h>0){
@@ -716,16 +724,17 @@ function ray_draw(name,x,y,angle,color){
 	  tmp_point = find_ray_surf_crosspoint(n,tmp_point[0],tmp_point[1],tmp_point[2],e[i+j].d,0,e[i+j].d,e[i+j].front);
 	  obj[path]["x"+npi]= cx(tmp_point[0]);
 	  obj[path]["y"+npi]= cy(tmp_point[1]);  
-	  npi++;
 	  
 	  console.log("x"+npi+"  x:"+tmp_point[0]+" y:"+tmp_point[1]);
-	  
+	  npi++;
+	  	  
 	  tmp_point = find_ray_surf_crosspoint(1/n,tmp_point[0],tmp_point[1],tmp_point[2],(e[i+j].d+e[i+j].t),0,(e[i+j].d+e[i+j].t),e[i+j].back);
 	  obj[path]["x"+npi]= cx(tmp_point[0]);
 	  obj[path]["y"+npi]= cy(tmp_point[1]);
-	  npi++;
 	  
 	  console.log("x"+npi+"  x:"+tmp_point[0]+" y:"+tmp_point[1]);
+	  npi++;
+	  
 	  
       }else{
 	  obj[path]["x"+npi]= cx(tmp_point[0]);
@@ -788,9 +797,10 @@ function ray_draw(name,x,y,angle,color){
 
 
 function find_ray_surf_crosspoint(n,ray_x,ray_y,ray_k,surf_x,surf_y,surf_d,surf){
-  
+  var tmp_x, tmp_y, tmp_sign;
   var ray_b = ray_y-ray_k*ray_x;
   //console.log("ITE");
+  
   var surf_k = find_surf_tangent(surf_y,surf);
     
   if (surf_k=="inf") x_c = surf_x;
@@ -801,6 +811,20 @@ function find_ray_surf_crosspoint(n,ray_x,ray_y,ray_k,surf_x,surf_y,surf_d,surf)
   y_c = ray_k*x_c + ray_b;
   
   x_delta = find_surf_point(y_c,surf_d,surf);
+  //"nan" - there is no x for the target y - the solution is to move a little along the curve
+  
+  if (x_delta=="nan"){
+    //find the crossing with the front vertical line to find out where to make steps - up or down
+    tmp_sign = ray_k*surf_d+ray_b;
+    if (tmp_sign<0) tmp_sign = -1;
+    else            tmp_sign = +1;
+    
+    tmp_y = surf_y+tmp_sign*small_step_if_sqrt_from_negative;
+    tmp_x = find_surf_point(tmp_y,surf_d,surf);
+    console.log("Entering loop with x:"+tmp_x+" y:"+tmp_y);
+    return find_ray_surf_crosspoint(n,ray_x,ray_y,ray_k,tmp_x,tmp_y,surf_d,surf);
+  }
+  //console.log("Poor x_delta is "+x_delta);
   
   if (Math.abs(x_delta-x_c)>epsilon) {
     //console.log("REPEAT! Delta is "+Math.abs(x_delta-x_c));
@@ -809,6 +833,7 @@ function find_ray_surf_crosspoint(n,ray_x,ray_y,ray_k,surf_x,surf_y,surf_d,surf)
     //console.log("GOT IT! Delta is "+Math.abs(x_delta-x_c)+"    "+x_c+":"+y_c+" vs "+x_delta);
     
     surf_n = ((surf_k=="inf")?(0):(-1/surf_k));
+    //console.log("Surface normal is "+surf_n+" rayK is "+ray_k);
     
     if (surf_k=="inf") beta = Math.PI/2;
     else               beta = (Math.atan(surf_k)<0)?(Math.PI+Math.atan(surf_k)):Math.atan(surf_k);
@@ -843,7 +868,12 @@ function find_ray_surf_crosspoint(n,ray_x,ray_y,ray_k,surf_x,surf_y,surf_d,surf)
 
 function find_surf_tangent(y,surf){
     var c_px = surf.c;
-    var _sqrt_ = Math.sqrt(1-(1+surf.k)*y*y/(c_px*c_px));
+    var pre_sqrt = 1-(1+surf.k)*y*y/(c_px*c_px);
+    var _sqrt_=0;
+    
+    if (pre_sqrt<0) return "nan";
+    else            _sqrt_ = Math.sqrt(pre_sqrt); 
+    
     var tmp = 2*(y/c_px)/(1+_sqrt_)+Math.pow(y,3)/Math.pow(c_px,3)/(1+_sqrt_)/(1+_sqrt_)/_sqrt_+2*surf.a[0]*y+4*surf.a[1]*Math.pow(y,3)+6*surf.a[2]*Math.pow(y,5)+8*surf.a[3]*Math.pow(y,7);
     return (tmp==0)?"inf":1/tmp;
 }
@@ -851,7 +881,16 @@ function find_surf_tangent(y,surf){
 function find_surf_point(y,d,surf){
     var c_px = surf.c;
     var d_px = d;
-    var _sqrt_ = Math.sqrt(1-(1+surf.k)*y*y/(c_px*c_px));
+    
+    var pre_sqrt = 1-(1+surf.k)*y*y/(c_px*c_px);
+    var _sqrt_=0;
+
+    if (pre_sqrt<0){
+      console.log("Square-rooting a negative number "+pre_sqrt);
+      return "nan";
+    }else            _sqrt_ = Math.sqrt(pre_sqrt); 
+    
+    //console.log("c_px:"+c_px+" d_px:"+d_px+" sqrt:"+_sqrt_);
     var tmp = d_px+y*y/c_px/(1+_sqrt_)+surf.a[0]*Math.pow(y,2)+surf.a[1]*Math.pow(y,4)+surf.a[2]*Math.pow(y,6)+surf.a[3]*Math.pow(y,8);
     return tmp;
 }
