@@ -612,7 +612,8 @@ function rays_draw(){
   var x = (+e[e.length-1].d+e[e.length-1].t);
   var y = +$("#rays_imhh").val();
   var alpha = 0;//degrees
-  var dalpha = 2;//degrees
+  //dalpha step depends on where the marginal chief ray is traced from
+  var dalpha = ((y>0)?1:-1);//degrees
   var old_cv = 0;
   //find chief ray!
   
@@ -628,8 +629,12 @@ function rays_draw(){
   var n = $("#rays_n").val();
   
   //step1!
-  var hh1 = find_marginal_ray_half_height(0,0,0,0.1,old_cv,100);
+  console.log("finding marginal ray height");
+  //starts from from the very left
+  var hh1 = find_marginal_ray_half_height(-1,0,0,0.1,old_cv,100);
   $("#crw").html(Math.round(2*hh1*1000)/1000);
+  console.log("finding aperture stop ray");
+  //starts from the center of the aperture stop?
   var c1  = find_aperture_stop_ray(x,y,alpha,0,dalpha,old_cv,100);
   var tmp = (c1[2]>90)?(c1[2]-180):(c1[2]);
   tmp=Math.round(tmp*1000)/1000;
@@ -641,7 +646,6 @@ function rays_draw(){
       ray_draw("center_"+0,0,0,0,$("#rays_color").val());
       ray_draw("slant_"+0,c1[0],c1[1],c1[2],$("#rays_color").val());    
   }else{
-    console.log("Important step");
     for(var i=0;i<n;i++){
       //need to step away by ~100px?
       //ray_draw("center_"+i,0,(-hh1+step*i),0,$("#rays_color").val());
@@ -719,7 +723,7 @@ function ray_draw(name,x,y,angle,color){
   for(var j=0;j<(e.length-i);j++){
       //console.log(j);
       if (e[i+j].front.h>0){
-	  
+	  console.log("Kf="+k+" "+tmp_point[0]+" "+tmp_point[1]+" "+tmp_point[2]);
 	  n=Glass[e[i+j].m.toUpperCase()].n;
 	  tmp_point = find_ray_surf_crosspoint(n,tmp_point[0],tmp_point[1],tmp_point[2],e[i+j].d,0,e[i+j].d,e[i+j].front);
 	  obj[path]["x"+npi]= cx(tmp_point[0]);
@@ -727,7 +731,7 @@ function ray_draw(name,x,y,angle,color){
 	  
 	  console.log("x"+npi+"  x:"+tmp_point[0]+" y:"+tmp_point[1]);
 	  npi++;
-	  	  
+	  
 	  tmp_point = find_ray_surf_crosspoint(1/n,tmp_point[0],tmp_point[1],tmp_point[2],(e[i+j].d+e[i+j].t),0,(e[i+j].d+e[i+j].t),e[i+j].back);
 	  obj[path]["x"+npi]= cx(tmp_point[0]);
 	  obj[path]["y"+npi]= cy(tmp_point[1]);
@@ -761,7 +765,7 @@ function ray_draw(name,x,y,angle,color){
   
   for(var k=0;k<=i;k++){
       if (e[i-k].back.h>0){
-	  
+	  console.log("Kb="+k+" "+tmp_point[0]+" "+tmp_point[1]+" "+tmp_point[2]);
 	  n=Glass[e[i-k].m.toUpperCase()].n;
 	  tmp_point = find_ray_surf_crosspoint(n,tmp_point[0],tmp_point[1],tmp_point[2],(e[i-k].d+e[i-k].t),0,(e[i-k].d+e[i-k].t),e[i-k].back);
 	  
@@ -770,7 +774,7 @@ function ray_draw(name,x,y,angle,color){
 	  npi++;
 	    
 	  //console.log("x"+npi+"  x:"+tmp_point[0]+" y:"+tmp_point[1]);
-	  
+	  console.log(k+" "+tmp_point[0]+" "+tmp_point[1]+" "+tmp_point[2]);
 	  tmp_point = find_ray_surf_crosspoint(1/n,tmp_point[0],tmp_point[1],tmp_point[2],e[i-k].d,0,e[i-k].d,e[i-k].front);
 	  obj[path]["x"+npi]= cx(tmp_point[0]);
 	  obj[path]["y"+npi]= cy(tmp_point[1]);
@@ -816,6 +820,7 @@ function find_ray_surf_crosspoint(n,ray_x,ray_y,ray_k,surf_x,surf_y,surf_d,surf)
   if (x_delta=="nan"){
     //find the crossing with the front vertical line to find out where to make steps - up or down
     tmp_sign = ray_k*surf_d+ray_b;
+    
     if (tmp_sign<0) tmp_sign = -1;
     else            tmp_sign = +1;
     
@@ -903,8 +908,10 @@ function cy(y){
   return (-y*canvas_scale+yO);
 }
 
-//returns marginal ray height/2 when traced from center of the last element
+//returns marginal ray height/2 when traced from center of the last element? WHAT?!
+//check! it should trace from the front!!! By marginal ray is meant the ray that hits the aperture stop border
 function find_marginal_ray_half_height(x,y,height,dheight,old_cv,limit){
+  
   tmp_point = Array();
   tmp_point[0]=x;
   tmp_point[1]=height;
@@ -947,11 +954,13 @@ function find_aperture_stop_ray(x,y,alpha,height,dalpha,old_cv,limit){
   tmp_point[2]=Math.tan(alpha*Math.PI/180);
     
   for(var k=0;k<=i;k++){
+      //if not aperture stop - trace
       if (e[i-k].back.h>0){
 	  n=Glass[e[i-k].m.toUpperCase()].n;
 	  tmp_point = find_ray_surf_crosspoint(n,tmp_point[0],tmp_point[1],tmp_point[2],(+e[i-k].d+e[i-k].t),0,(+e[i-k].d+e[i-k].t),e[i-k].back);
 	  tmp_point = find_ray_surf_crosspoint(1/n,tmp_point[0],tmp_point[1],tmp_point[2],+e[i-k].d,0,+e[i-k].d,e[i-k].front);
       }else{
+	  //aperture has negative .h
 	  cv = tmp_point[1]-tmp_point[2]*tmp_point[0]+tmp_point[2]*e[i-k].d-height;
 	  if (Math.abs(cv)<epsilon2) {
 	    console.log("chudo ray finder triumphantly returns x:"+x+" y:"+y+" alpha:"+alpha+" limit(left)="+limit+" delta= "+(cv)+"for the height="+height);
